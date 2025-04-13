@@ -1,0 +1,121 @@
+/* Light & Dark Mode */
+:root {
+    --card-bg: #fff;
+    --text-color: #000;
+    --border-color: #eee;
+    --route-bg: #f8f9fa;
+    --shadow-color: rgba(0,0,0,0.08);
+}
+
+.dark-mode {
+    --card-bg: rgba(30,41,59,0.95);
+    --text-color: #e0e0e0;
+    --border-color: #444;
+    --route-bg: rgba(30, 41, 59, 0.466);
+    --shadow-color: rgba(255,255,255,0.08);
+}
+
+
+
+
+.ride-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px var(--shadow-color);
+    background: var(--card-bg);
+    color: var(--text-color);
+    transition: transform 0.3s ease, background 0.3s ease;
+    margin-bottom: 2rem;
+}
+
+.ride-card:hover {
+    transform: translateY(-5px);
+}
+
+.route-animation {
+    position: relative;
+    height: 60px;
+    background: var(--route-bg);
+    border-radius: 15px 15px 0 0;
+    padding: 15px;
+}
+
+.route-dots {
+    position: absolute;
+    width: 90%;
+    border-top: 3px dotted #666;
+    top: 50%;
+    left: 5%;
+}
+
+.car-icon {
+    position: absolute;
+    top: -10px;
+    color: #e74c3c;
+    font-size: 1.8rem;
+    animation: moveCar 20s ease-in-out 2;
+}
+
+@keyframes moveCar {
+    0%, 50% { left: 5%; }
+    25%, 75% { left: 85%; }
+    100% { left: 85%; }
+}
+
+.point-label {
+    position: absolute;
+    top: 30px;
+    font-weight: 600;
+}
+
+.point-a { left: 5%; color: #2ecc71; }
+.point-b { right: 5%; color: #e67e22; }
+
+.detail-item {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+}
+
+.theme-purple { color: #9b59b6; }
+.theme-blue { color: #3498db; }
+.theme-green { color: #2ecc71; }
+.theme-orange { color: #e67e22; }
+
+.fare-badge {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 700;
+}
+
+.tag {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 10px;
+    margin-left: 8px;
+}
+
+.available-tag { background: #2ecc7330; color: #27ae60; }
+.cheap-tag { background: #3498db30; color: #2980b9; }
+.fast-tag { background: #e74c3c30; color: #c0392b; }
+
+/* Dark Mode Toggle */
+.toggle-btn {
+    position: fixed;
+    top: 10px;
+    right: 15px;
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.toggle-btn:hover {
+    background: #1e88e5;
+}

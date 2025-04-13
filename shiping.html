@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Cargo Shipping Cards</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        /* Light & Dark Mode */
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #fff;
+            --text-color: #000;
+            --border-color: #eee;
+            --route-bg: #f8f9fa;
+            --shadow-color: rgba(0,0,0,0.08);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --border-color: #444;
+            --route-bg: #333;
+            --shadow-color: rgba(255,255,255,0.08);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .shipping-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            background: var(--card-bg);
+            color: var(--text-color);
+            transition: transform 0.3s ease, background 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .shipping-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .route-animation {
+            position: relative;
+            height: 60px;
+            background: var(--route-bg);
+            border-radius: 15px 15px 0 0;
+            padding: 15px;
+        }
+
+        .route-dots {
+            position: absolute;
+            width: 90%;
+            border-top: 3px dotted #666;
+            top: 50%;
+            left: 5%;
+        }
+
+        .truck-icon {
+            position: absolute;
+            top: -10px;
+            color: #e74c3c;
+            font-size: 1.8rem;
+            animation: moveTruck 4s linear forwards;
+        }
+
+        @keyframes moveTruck {
+            0% { left: 5%; }
+            50% { left: 50%; }
+            100% { left: 85%; }
+        }
+
+        .point-label {
+            position: absolute;
+            top: 30px;
+            font-weight: 600;
+        }
+
+        .point-a { left: 5%; color: #2ecc71; }
+        .point-b { right: 5%; color: #e67e22; }
+
+        .detail-item {
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-purple { color: #9b59b6; }
+        .theme-blue { color: #3498db; }
+        .theme-green { color: #2ecc71; }
+        .theme-orange { color: #e67e22; }
+
+        .fare-badge {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .tag {
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 10px;
+            margin-left: 8px;
+        }
+
+        .available-tag { background: #2ecc7330; color: #27ae60; }
+        .fragile-tag { background: #f39c1230; color: #f39c12; }
+        .priority-tag { background: #e74c3c30; color: #c0392b; }
+
+        /* Dark Mode Toggle */
+        .toggle-btn {
+            position: fixed;
+            top: 10px;
+            right: 15px;
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            background: #1e88e5;
+        }
+
+    </style>
+</head>
+<body>
+
+    <button class="toggle-btn" onclick="toggleDarkMode()">
+        <i class="bi bi-moon"></i> Dark Mode
+    </button>
+
+    <div class="container py-4">
+        <div class="row" id="cargo-container">
+            <!-- Dynamic cargo cards will be added here -->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const cargos = [
+            {
+                from: "Los Angeles",
+                to: "New York",
+                date: "2024-03-20T12:00",
+                price: 450.50,
+                weight: 25,
+                tags: ['available', 'priority'],
+                theme: 'theme-blue'
+            },
+            {
+                from: "Tokyo",
+                to: "San Francisco",
+                date: "2024-03-21T10:15",
+                price: 675.80,
+                weight: 40,
+                tags: ['fragile'],
+                theme: 'theme-orange'
+            }
+        ];
+
+        function createTags(tags) {
+            return tags.map(tag => {
+                const cls = {
+                    'available': 'available-tag',
+                    'fragile': 'fragile-tag',
+                    'priority': 'priority-tag'
+                }[tag];
+                return `<span class="tag ${cls}">${tag}</span>`;
+            }).join(' ');
+        }
+
+        function createCargoCard(cargo) {
+            return `
+                <div class="col-lg-6">
+                    <div class="shipping-card card">
+                        <div class="route-animation">
+                            <div class="route-dots"></div>
+                            <i class="bi bi-truck-front-fill truck-icon"></i>
+                            <span class="point-label point-a">${cargo.from}</span>
+                            <span class="point-label point-b">${cargo.to}</span>
+                        </div>
+
+                        <div class="detail-item ${cargo.theme}">
+                            <i class="bi bi-calendar-check me-2"></i>
+                            ${new Date(cargo.date).toLocaleString()}
+                            <span class="ms-auto">Weight: ${cargo.weight} kg</span>
+                        </div>
+
+                        <div class="detail-item ${cargo.theme}">
+                            <i class="bi bi-geo-alt me-2"></i>
+                            Distance: ${(Math.random()*500+100).toFixed(1)} km
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center p-3">
+                            <div class="d-flex align-items-center">
+                                <span class="fare-badge">$${cargo.price.toFixed(2)}</span>
+                                ${createTags(cargo.tags)}
+                            </div>
+                            <button class="btn ${cargo.theme.replace('theme', 'btn-outline')}">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Ship
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        document.getElementById('cargo-container').innerHTML = cargos.map(createCargoCard).join(' ');
+
+        function toggleDarkMode() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            if (currentTheme === "dark") {
+                body.setAttribute('data-theme', 'light');
+                document.querySelector('.toggle-btn').innerHTML = '<i class="bi bi-moon"></i> Dark Mode';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                document.querySelector('.toggle-btn').innerHTML = '<i class="bi bi-sun"></i> Light Mode';
+            }
+        }
+    </script>
+
+</body>
+</html>
