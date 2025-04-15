@@ -10,8 +10,43 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
-       
-    </style>
+        .seat-grid {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .seat-btn {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .seat-btn:hover:not(.occupied) {
+            transform: scale(1.1);
+        }
+        
+        .seat-btn.selected {
+            background: #0d6efd !important;
+            color: white !important;
+        }
+        
+        .seat-btn.occupied {
+            background: #dee2e6 !important;
+            cursor: not-allowed;
+        }
+        
+        @media (max-width: 768px) {
+            .seat-grid {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                justify-content: start;
+            }
+        }
+        </style>
 </head>
 <body>
     <header class="header py-3">
@@ -45,21 +80,8 @@
 
     <div class=" container main-grid">
         <div class="sidebar">
-            <nav class="d-flex flex-column">
-                <a href="index.html" class="nav-link-custom">
-                    <i class="fas fa-home me-3"></i>Home
-                </a>
-                <a href="#!" class="nav-link-custom" data-bs-toggle="modal" data-bs-target="#SearchModal">
-                    <i class="fas fa-search me-3"></i>Search for a Ride
-                </a>
+            <nav id="role-based-nav" class="d-flex flex-column">
                 
-                <a href="me.html" class="nav-link-custom">
-                    <i class="fas fa-user me-3"></i>Profile
-                </a>
-                <a href="support.html" class="nav-link-custom">
-                    <i class="fas fa-envelope me-3"></i>Support
-                </a>
-                <button class="request-button" data-bs-toggle="modal" data-bs-target="#RequestModal"  >Request for a Ride</button>
             </nav>
 
             <!-- <div class="premium-banner">
@@ -218,99 +240,6 @@
     </div>
 </div>
 
-<style>
-.seat-grid {
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-.seat-btn {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-}
-
-.seat-btn:hover:not(.occupied) {
-    transform: scale(1.1);
-}
-
-.seat-btn.selected {
-    background: #0d6efd !important;
-    color: white !important;
-}
-
-.seat-btn.occupied {
-    background: #dee2e6 !important;
-    cursor: not-allowed;
-}
-
-@media (max-width: 768px) {
-    .seat-grid {
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        justify-content: start;
-    }
-}
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize seats
-    const seatGrid = document.getElementById('seatGrid');
-    const totalPriceElement = document.getElementById('totalPrice');
-    const availableSeatsElement = document.getElementById('availableSeats');
-    let selectedSeats = 0;
-    const seatPrice = 500;
-
-    // Generate seat layout (example: 4 rows of 2-3-2 seating)
-    const seatLayout = [1, 2, 0, 3, 4, 5, 0, 6, 7];
-    seatLayout.forEach((seat, index) => {
-        const seatBtn = document.createElement('button');
-        seatBtn.className = 'seat-btn btn btn-outline-primary col-3 mb-2';
-        
-        if(seat === 0) {
-            seatBtn.className += ' invisible';
-            seatGrid.appendChild(seatBtn);
-            return;
-        }
-
-        seatBtn.innerHTML = seat;
-        seatBtn.type = 'button';
-        
-        // Mark some seats as occupied (example)
-        if(seat === 3 || seat === 5) {
-            seatBtn.className += ' occupied';
-            seatBtn.disabled = true;
-        }
-
-        seatBtn.addEventListener('click', function() {
-            if(!this.classList.contains('occupied')) {
-                this.classList.toggle('selected');
-                selectedSeats = document.querySelectorAll('.seat-btn.selected').length;
-                totalPriceElement.textContent = `₹${selectedSeats * seatPrice}`;
-                availableSeatsElement.textContent = 4 - selectedSeats; // Update available seats
-            }
-        });
-        
-        seatGrid.appendChild(seatBtn);
-    });
-
-    // Handle form submission
-    document.getElementById('bookingForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        if(selectedSeats > 0) {
-            new bootstrap.Modal(document.getElementById('successModal')).show();
-        } else {
-            alert('Please select at least one seat!');
-        }
-    });
-});
-</script>
-
         </main>
     </div>
 
@@ -318,34 +247,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     <nav class="mobile-footer-nav">
-        <div class="mobile-nav-items">
-            <a href="index.html" class="mobile-nav-item active">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
-            </a>
-            <a href="#!" class="mobile-nav-item" data-bs-toggle="modal" data-bs-target="#SearchModal">
-                <i class="fas bi bi-search"></i>
-                <span>Search</span>
-            </a>
-            <a href="#!" data-bs-toggle="modal" data-bs-target="#RequestModal"  class="mobile-nav-item">
-                <i class="fas bi-car-front-fill"></i>
-                <span>Request</span>
-            </a>
-            <a href="me.html" class="mobile-nav-item">
-                <i class="fas fa-user"></i>
-                <span>Profile</span>
-            </a>
-            <a href="support.html" class="mobile-nav-item">
-                <i class="fas fa-envelope"></i>
-                <span>Support</span>
-            </a>
+        <div class="mobile-nav-items" id="mobile-nav-items">
+            <!-- Nav items will be injected here -->
         </div>
+       
     </nav>
+
+    <div class="custom-alert" id="customAlert">
+        <div class="alert-progress" id="alertProgress"></div>
+        <span class="alert-content" id="alertContent"></span>
+    </div>
 
     <button class="mode-toggle" id="darkModeToggle">🌙</button>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/main.js"></script>
-
+<script src="js/booking.js"></script>
 
 </body>
 </html>

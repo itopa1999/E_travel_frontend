@@ -43,10 +43,13 @@
         padding: 0.35em 0.65em;
         border-radius: 0.25rem;
     }
+
+    .welcome{
+        color: #6c757d;
+    }
     
-    .bg-pending { background-color: #fff3cd; }
-    .bg-completed { background-color: #d1e7dd; }
-    .bg-cancelled { background-color: #f8d7da; }
+    .bg-pending { background-color: #fff3cd; padding: 0.35em 0.65em;
+        border-radius: 0.25rem;}
     
     @media (max-width: 768px) {
         .card .card-body {
@@ -90,6 +93,26 @@
             margin-right: 1rem;
         }
     }
+
+    .dark-mode .card {
+        background: var(--dark-card);
+        color: var(--light);
+      }
+      
+      .dark-mode .card h5,
+      .dark-mode .card small {
+        color: var(--light);
+      }
+      
+      .dark-mode .table-hover tbody tr:hover {
+        background-color: #334155;
+      }
+
+      
+      .dark-mode .form-check-input {
+        background-color: #334155;
+        border-color: #475569;
+      }
     </style>
 </head>
 <body>
@@ -124,21 +147,8 @@
 
     <div class=" container main-grid">
         <div class="sidebar">
-            <nav class="d-flex flex-column">
-                <a href="index.html" class="nav-link-custom">
-                    <i class="fas fa-home me-3"></i>Home
-                </a>
-                <a href="#!" class="nav-link-custom" data-bs-toggle="modal" data-bs-target="#SearchModal">
-                    <i class="fas fa-search me-3"></i>Search for a Ride
-                </a>
-                
-                <a href="me.html" class="nav-link-custom">
-                    <i class="fas fa-user me-3"></i>Profile
-                </a>
-                <a href="support.html" class="nav-link-custom">
-                    <i class="fas fa-envelope me-3"></i>Support
-                </a>
-                <button class="request-button" data-bs-toggle="modal" data-bs-target="#RequestModal"  >Request for a Ride</button>
+            <nav id="role-based-nav" class="d-flex flex-column">
+               
             </nav>
 
             <!-- <div class="premium-banner">
@@ -151,11 +161,16 @@
 
         <!-- Main Feed -->
         <main>
+            <div id="idAlert" class="alert alert-warning alert-dismissible fade show" role="alert" style="display: none;">
+                ⚠️ Your ID is not verified. Please verify your ID to continue.
+                <a href="verify-id.html" class="alert-link ms-2">Click here to verify</a>.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="mb-0">Welcome, <span id="driverName">John Driver</span></h2>
+                <h2 class="mb-0 welcome">Welcome, <span id="driverName">John Driver</span></h2>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="onlineToggle" checked>
-                    <label class="form-check-label" for="onlineToggle">Online</label>
+                    <input class="form-check-input" type="checkbox" id="onlineToggle">
+                    <label class="form-check-label text-mute" for="onlineToggle" id="toggleLabel">Online</label>
                 </div>
             </div>
                     
@@ -166,8 +181,8 @@
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-wallet fa-2x text-primary me-3"></i>
                                 <div>
-                                    <h5 class="mb-0">₦245,800</h5>
-                                    <small class="text-muted">Total Earnings</small>
+                                    <h5 class="mb-0" id="totalEarnings">₦0</h5>
+                                    <small class="text-mute">Total Earnings</small>
                                 </div>
                             </div>
                         </div>
@@ -179,8 +194,8 @@
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-check-circle fa-2x text-success me-3"></i>
                                 <div>
-                                    <h5 class="mb-0">142</h5>
-                                    <small class="text-muted">Completed Rides</small>
+                                    <h5 class="mb-0" id="completedRides">0</h5>
+                                    <small class="text-mute">Completed Rides</small>
                                 </div>
                             </div>
                         </div>
@@ -192,8 +207,8 @@
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-clock fa-2x text-warning me-3"></i>
                                 <div>
-                                    <h5 class="mb-0">3</h5>
-                                    <small class="text-muted">Pending Requests</small>
+                                    <h5 class="mb-0" id="pendingRequests">0</h5>
+                                    <small class="text-mute">Pending Requests</small>
                                 </div>
                             </div>
                         </div>
@@ -205,8 +220,8 @@
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-star fa-2x text-info me-3"></i>
                                 <div>
-                                    <h5 class="mb-0">4.8</h5>
-                                    <small class="text-muted">Average Rating</small>
+                                    <h5 class="mb-0" id="averageRating">0.0</h5>
+                                    <small class="text-mute">Average Rating</small>
                                 </div>
                             </div>
                         </div>
@@ -215,7 +230,7 @@
             </div>
 
 
-            <div class="card shadow-sm mb-4">
+            <div class="card shadow-sm mt-4 mb-4">
                 <div class="card-header">
                     <h5 class="mb-0">Active Requests</h5>
                 </div>
@@ -254,35 +269,30 @@
                     <ul class="list-group">
                         <li class="list-group-item d-flex justify-content-between">
                             <span>Today:</span>
-                            <span>₦15,400</span>
+                            <span id="summaryToday">₦0.0</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
                             <span>This Week:</span>
-                            <span>₦89,200</span>
+                            <span id="summaryWeek">₦0.0</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
                             <span>This Month:</span>
-                            <span>₦245,800</span>
+                            <span id="summaryMonth">₦0.0</span>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Payout Button -->
-                <button class="btn btn-success w-100 mb-4">
+                <button class="btn btn-success w-100 mb-4" data-bs-toggle="modal" data-bs-target="#payoutModal">
                     <i class="fas fa-money-check me-2"></i>Request Payout
                 </button>
 
                 <!-- Recent Reviews -->
                 <div class="mb-3">
                     <h6>Recent Reviews</h6>
-                    <div class="list-group">
+                    <div class="list-group" id="list-group">
                         <div class="list-group-item">
-                            <div class="d-flex align-items-center">
-                                <div class="me-3">
-                                    ⭐⭐⭐⭐
-                                </div>
-                                <small class="text-muted">"Great driver, very professional"</small>
-                            </div>
+
                         </div>
                         <!-- More reviews -->
                     </div>
@@ -295,92 +305,62 @@
 
 
     <nav class="mobile-footer-nav">
-        <div class="mobile-nav-items">
-            <a href="index.html" class="mobile-nav-item active">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
-            </a>
-            <a href="#!" class="mobile-nav-item" data-bs-toggle="modal" data-bs-target="#SearchModal">
-                <i class="fas bi bi-search"></i>
-                <span>Search</span>
-            </a>
-            <a href="#!" data-bs-toggle="modal" data-bs-target="#RequestModal"  class="mobile-nav-item">
-                <i class="fas bi-car-front-fill"></i>
-                <span>Request</span>
-            </a>
-            <a href="me.html" class="mobile-nav-item">
-                <i class="fas fa-user"></i>
-                <span>Profile</span>
-            </a>
-            <a href="support.html" class="mobile-nav-item">
-                <i class="fas fa-envelope"></i>
-                <span>Support</span>
-            </a>
+        <div class="mobile-nav-items" id="mobile-nav-items">
+            <!-- Nav items will be injected here -->
         </div>
+        
     </nav>
+
+    <div class="modal fade" id="payoutModal" tabindex="-1" aria-labelledby="payoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <form id="payoutForm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="payoutModalLabel">Request Payout</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+      
+              <div class="modal-body">
+
+                <div class="alert alert-warning" role="alert">
+                    ⚠️ <strong>Note:</strong> Account name must match your registered First Name and Last Name.
+                  </div>
+
+                <div class="mb-3">
+                <label for="amount" class="form-label">Amount</label>
+                <input type="number" class="form-control" id="amount" name="amount" required>
+                <span id="amountError" class="text-danger small mt-1 d-block"></span>
+                </div>
+      
+                <div class="mb-3">
+                  <label for="bank" class="form-label">Bank Name</label>
+                  <input type="text" class="form-control" id="bank" name="bank" required>
+                </div>
+      
+                <div class="mb-3">
+                  <label for="accountNumber" class="form-label">Account Number</label>
+                  <input type="number" class="form-control" id="accountNumber" name="accountNumber" required>
+                </div>
+              </div>
+      
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Submit Request</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+
+    <div class="custom-alert" id="customAlert">
+        <div class="alert-progress" id="alertProgress"></div>
+        <span class="alert-content" id="alertContent"></span>
+    </div>
 
     <button class="mode-toggle" id="darkModeToggle">🌙</button>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/main.js"></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Sample requests data
-        const requests = [
-            {
-                id: 1,
-                from: "Victoria Island",
-                to: "Lekki Phase 1",
-                type: "Passenger",
-                distance: "12km",
-                fare: "₦4,500",
-                status: "Pending"
-            },
-            // Add more requests
-        ];
-    
-        // Populate active requests
-        const tbody = document.getElementById('activeRequests');
-        
-        requests.forEach(request => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td data-label="Route">
-                    <div>${request.from}</div>
-                    <small class="text-muted">to ${request.to}</small>
-                </td>
-                <td data-label="Type">${request.type}</td>
-                <td data-label="Distance">${request.distance}</td>
-                <td data-label="Fare">${request.fare}</td>
-                <td data-label="Status">
-                    <span class="status-badge bg-${getStatusClass(request.status)}">
-                        ${request.status}
-                    </span>
-                </td>
-                <td data-label="Action">
-                    <button class="btn btn-sm btn-success me-2">Accept</button>
-                    <button class="btn btn-sm btn-danger">Decline</button>
-                </td>
-            `;
-            tbody.appendChild(row);
-        });
-    
-        // Online toggle handler
-        document.getElementById('onlineToggle').addEventListener('change', function() {
-            const statusLabel = this.checked ? 'Online' : 'Offline';
-            // Add logic to update driver status
-        });
-    
-        function getStatusClass(status) {
-            switch(status.toLowerCase()) {
-                case 'pending': return 'pending';
-                case 'completed': return 'completed';
-                case 'cancelled': return 'cancelled';
-                default: return '';
-            }
-        }
-    });
-    </script>
+<script src="js/D_index.js"></script>
 
 </body>
 </html>

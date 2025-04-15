@@ -1,5 +1,8 @@
+restrictPageAccess({
+    onlyClient: true,
+  });
 document.addEventListener("DOMContentLoaded", function () {
-
+    
 const rides = [
     {
         from: "Central Park",

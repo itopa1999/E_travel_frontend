@@ -13,7 +13,7 @@
 
 
 * {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', sans-serif;
     box-sizing: border-box;
   }
 
@@ -375,4 +375,14 @@ body.dark-mode .mobile-nav-item {
   
   }
   
+
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+  }
   
+  /* For Firefox */
+  input[type=number] {
+      -moz-appearance: textfield;
+  }

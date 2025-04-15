@@ -485,6 +485,114 @@ function RemoveAccessFromLocalStorage(){
     localStorage.removeItem("e_travel_first_name");
     localStorage.removeItem("e_travel_profilePicture");
     localStorage.removeItem("e_travel_user_id");
-    localStorage.removeItem("e_travel_is_driver");
-    localStorage.removeItem("e_travel_is_client");
+    localStorage.setItem("e_travel_is_driver", false);
+    localStorage.setItem("e_travel_is_client", false);
+}
+
+
+const isDriver = localStorage.getItem("e_travel_is_driver") === "true";
+
+  const driverNavItems = `
+    <a href="D_index.html" class="mobile-nav-item active">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a href="client-bookings.html" class="mobile-nav-item">
+        <i class="fas bi-car-front-fill"></i>
+        <span>Client Bookings</span>
+    </a>
+    <a href="earnings.html" class="mobile-nav-item">
+        <i class="fas bi-wallet"></i>
+        <span>Earnings</span>
+    </a>
+    
+    <a href="me.html" class="mobile-nav-item">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+    </a>
+    <a href="support.html" class="mobile-nav-item">
+        <i class="fas fa-envelope"></i>
+        <span>Support</span>
+    </a>
+  `;
+
+  const clientNavItems = `
+    <a href="#" class="mobile-nav-item active">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a href="#!" class="mobile-nav-item" data-bs-toggle="modal" data-bs-target="#SearchModal">
+        <i class="fas bi bi-search"></i>
+        <span>Search</span>
+    </a>
+    <a href="#!" data-bs-toggle="modal" data-bs-target="#RequestModal" class="mobile-nav-item">
+        <i class="fas bi-car-front-fill"></i>
+        <span>Request</span>
+    </a>
+    <a href="me.html" class="mobile-nav-item">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+    </a>
+    <a href="support.html" class="mobile-nav-item">
+        <i class="fas fa-envelope"></i>
+        <span>Support</span>
+    </a>
+  `;
+
+  document.getElementById("mobile-nav-items").innerHTML = isDriver ? driverNavItems : clientNavItems;
+
+
+const nav = document.getElementById("role-based-nav");
+
+if (isDriver) {
+    nav.innerHTML = `
+        <a href="D_index.html" class="nav-link-custom">
+            <i class="fas fa-home me-3"></i>Home
+        </a>
+        <a href="client-booking.html" class="nav-link-custom">
+            <i class="fas fa-user me-3"></i>Client Bookings
+        </a>
+        <a href="earnings.html" class="nav-link-custom">
+            <i class="fas bi-wallet me-3"></i>Earnings
+        </a>
+        <a href="me.html" class="nav-link-custom">
+            <i class="fas fa-user me-3"></i>Profile
+        </a>
+        <a href="support.html" class="nav-link-custom">
+            <i class="fas fa-envelope me-3"></i>Support
+        </a>
+    `;
+} else {
+    nav.innerHTML = `
+        <a href="#" class="nav-link-custom">
+            <i class="fas fa-home me-3"></i>Home
+        </a>
+        <a href="#!" class="nav-link-custom" data-bs-toggle="modal" data-bs-target="#SearchModal">
+            <i class="fas fa-search me-3"></i>Search for a Ride
+        </a>
+        <a href="me.html" class="nav-link-custom">
+            <i class="fas fa-user me-3"></i>Profile
+        </a>
+        <a href="support.html" class="nav-link-custom">
+            <i class="fas fa-envelope me-3"></i>Support
+        </a>
+        <button class="request-button" data-bs-toggle="modal" data-bs-target="#RequestModal">
+            Request for a Ride
+        </button>
+    `;
+}
+
+
+
+  function restrictPageAccess(options) {
+    const isClient = localStorage.getItem("e_travel_is_client") === "true";
+    const isDriver = localStorage.getItem("e_travel_is_driver") === "true";
+
+    if (options.onlyDriver && !isDriver) {
+        window.location.href = options.redirectTo || "index.html";
+    }
+
+    if (options.onlyClient && !isClient) {
+        window.location.href = options.redirectTo || "D_index.html";
+    }
 }

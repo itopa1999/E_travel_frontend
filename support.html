@@ -45,21 +45,8 @@
 
     <div class=" container main-grid">
         <div class="sidebar">
-            <nav class="d-flex flex-column">
-                <a href="index.html" class="nav-link-custom">
-                    <i class="fas fa-home me-3"></i>Home
-                </a>
-                <a href="#!" class="nav-link-custom" data-bs-toggle="modal" data-bs-target="#SearchModal">
-                    <i class="fas fa-search me-3"></i>Search for a Ride
-                </a>
+            <nav id="role-based-nav" class="d-flex flex-column">
                 
-                <a href="me.html" class="nav-link-custom">
-                    <i class="fas fa-user me-3"></i>Profile
-                </a>
-                <a href="support.html" class="nav-link-custom">
-                    <i class="fas fa-envelope me-3"></i>Support
-                </a>
-                <button class="request-button" data-bs-toggle="modal" data-bs-target="#RequestModal"  >Request for a Ride</button>
             </nav>
 
             <!-- <div class="premium-banner">
@@ -81,29 +68,16 @@
 
 
     <nav class="mobile-footer-nav">
-        <div class="mobile-nav-items">
-            <a href="index.html" class="mobile-nav-item active">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
-            </a>
-            <a href="#!" class="mobile-nav-item" data-bs-toggle="modal" data-bs-target="#SearchModal">
-                <i class="fas bi bi-search"></i>
-                <span>Search</span>
-            </a>
-            <a href="#!" data-bs-toggle="modal" data-bs-target="#RequestModal"  class="mobile-nav-item">
-                <i class="fas bi-car-front-fill"></i>
-                <span>Request</span>
-            </a>
-            <a href="me.html" class="mobile-nav-item">
-                <i class="fas fa-user"></i>
-                <span>Profile</span>
-            </a>
-            <a href="support.html" class="mobile-nav-item">
-                <i class="fas fa-envelope"></i>
-                <span>Support</span>
-            </a>
+        <div class="mobile-nav-items" id="mobile-nav-items">
+            <!-- Nav items will be injected here -->
         </div>
+        
     </nav>
+
+    <div class="custom-alert" id="customAlert">
+        <div class="alert-progress" id="alertProgress"></div>
+        <span class="alert-content" id="alertContent"></span>
+    </div>
 
     <button class="mode-toggle" id="darkModeToggle">🌙</button>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
