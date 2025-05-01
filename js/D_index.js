@@ -18,7 +18,7 @@ restrictPageAccess({
         }
 
         if (!response.ok) {
-            showAlert('error', '❌ Failed to fetch trending posts:', response.statusText);
+            showAlert('error', '❌ Failed to fetch dashboard info:', response.statusText);
             return;
         }
 
@@ -26,12 +26,11 @@ restrictPageAccess({
         
         displayData(data);
     } catch (error) {
-        showAlert('error','❌ Error fetching trending posts:', error);
+        showAlert('error','❌ Error fetching dashboard info:', error);
     }
 }
 
 function displayData(data){
-    console.log(data)
     const isIdVerified = data.isIdVerified
     const alertDiv = document.getElementById('idAlert');
     
@@ -78,9 +77,13 @@ function displayData(data){
 
         tbody.appendChild(row);
 
+    });
 
+        
         const reviewsList = document.getElementById("list-group");
         reviewsList.innerHTML = "";
+
+        
 
         data.ratings.forEach(r => {
             const item = document.createElement("div");
@@ -94,7 +97,7 @@ function displayData(data){
             reviewsList.appendChild(item);
         });
 
-    });
+    
 
     const onlineToggle = document.getElementById('onlineToggle');
     const toggleLabel = document.getElementById('toggleLabel');
@@ -108,7 +111,7 @@ function displayData(data){
         } else {
             onlineToggle.disabled = false;
             onlineToggle.checked = data.availability;
-            toggleLabel.classList.remove('text-mute');
+            toggleLabel.classList.remove('text-muted');
             toggleLabel.textContent = data.availability ? 'Online' : 'Offline';
         }
     }

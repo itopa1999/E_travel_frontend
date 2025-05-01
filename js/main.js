@@ -8,6 +8,7 @@ document.getElementById('logoutUser').addEventListener('click', function() {
 });
 
 
+
 document.getElementById('RegUser').addEventListener('click', function() {
     RemoveAccessFromLocalStorage()
     window.location.href = "auth.html";
@@ -549,7 +550,7 @@ if (isDriver) {
         <a href="D_index.html" class="nav-link-custom">
             <i class="fas fa-home me-3"></i>Home
         </a>
-        <a href="client-booking.html" class="nav-link-custom">
+        <a href="client-bookings.html" class="nav-link-custom">
             <i class="fas fa-user me-3"></i>Client Bookings
         </a>
         <a href="earnings.html" class="nav-link-custom">

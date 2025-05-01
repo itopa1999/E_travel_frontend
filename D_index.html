@@ -316,8 +316,8 @@
           <form id="payoutForm">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="payoutModalLabel">Request Payout</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title text-mute" id="payoutModalLabel">Request Payout</h5>
+                <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
       
               <div class="modal-body">
@@ -327,18 +327,18 @@
                   </div>
 
                 <div class="mb-3">
-                <label for="amount" class="form-label">Amount</label>
+                <label for="amount" class="form-label text-mute">Amount</label>
                 <input type="number" class="form-control" id="amount" name="amount" required>
                 <span id="amountError" class="text-danger small mt-1 d-block"></span>
                 </div>
       
                 <div class="mb-3">
-                  <label for="bank" class="form-label">Bank Name</label>
+                  <label for="bank" class="form-label text-mute">Bank Name</label>
                   <input type="text" class="form-control" id="bank" name="bank" required>
                 </div>
       
                 <div class="mb-3">
-                  <label for="accountNumber" class="form-label">Account Number</label>
+                  <label for="accountNumber" class="form-label text-mute">Account Number</label>
                   <input type="number" class="form-control" id="accountNumber" name="accountNumber" required>
                 </div>
               </div>

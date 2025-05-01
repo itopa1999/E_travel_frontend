@@ -1,55 +1,108 @@
-if (token === null){
-    showAlert("error",'❌ Authorized request');
-    RemoveAccessFromLocalStorage()
-    setTimeout(() => {
-        window.location.href = "auth.html";
-    }, 3000);
-      
-}
-
-
-
-// Sample data - replace with actual data from your backend
-const userData = {
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@example.com",
-    phone: "+1 (555) 123-4567",
-    transactions: [
-        { date: "2023-09-15", description: "Premium Subscription", amount: 49.99, status: "Completed" },
-        { date: "2023-08-28", description: "Wallet Top-up", amount: 100.00, status: "Completed" },
-        { date: "2023-07-12", description: "Service Fee", amount: -9.99, status: "Processed" }
-    ]
-};
-
-// Populate user data
 document.addEventListener('DOMContentLoaded', function() {
+    async function fetchData() {
+        try {
+            const response = await fetch('http://127.0.0.1:8000/admins/api/user/get-request/profile/', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+    
+            if (response.status === 401) {
+                window.location.href = 'auth.html';
+                return;
+            }
+    
+            if (!response.ok) {
+                showAlert('error', '❌ Failed to fetch profile info:', response.statusText);
+                return;
+            }
+    
+            const data = await response.json();
+            
+            displayData(data);
+        } catch (error) {
+            showAlert('error','❌ Error fetching profile info:', error);
+        }
+    }
+
+    function displayData(data){
     // User Info
-    document.getElementById('fullName').textContent = `${userData.firstName} ${userData.lastName}`;
-    document.getElementById('userEmail').textContent = userData.email;
-    document.getElementById('userPhone').textContent = userData.phone;
+    document.getElementById('profileName').innerText = `${data.first_name} ${data.last_name}`;
+    document.getElementById('profileEmail').innerText = data.email;
+    document.getElementById('profilePhone').innerText = data.phone;
+    document.getElementById('profilePicture').src = data.profile_picture;
+
+    }
+
 
     // Populate transactions
-    const tbody = document.querySelector('#transactionTable tbody');
-    userData.transactions.forEach(transaction => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${transaction.date}</td>
-            <td>${transaction.description}</td>
-            <td class="${transaction.amount > 0 ? 'text-success' : 'text-danger'}">
-                $${Math.abs(transaction.amount).toFixed(2)}
-            </td>
-            <td><span class="badge bg-${getStatusClass(transaction.status)}">${transaction.status}</span></td>
-        `;
-        tbody.appendChild(row);
+    // const tbody = document.querySelector('#transactionTable tbody');
+    // userData.transactions.forEach(transaction => {
+    //     const row = document.createElement('tr');
+    //     row.innerHTML = `
+    //         <td>${transaction.date}</td>
+    //         <td>${transaction.description}</td>
+    //         <td class="${transaction.amount > 0 ? 'text-success' : 'text-danger'}">
+    //             $${Math.abs(transaction.amount).toFixed(2)}
+    //         </td>
+    //         <td><span class="badge bg-${getStatusClass(transaction.status)}">${transaction.status}</span></td>
+    //     `;
+    //     tbody.appendChild(row);
+    // });
+
+
+    // Open modal on edit button click
+  document.querySelector('.btn.btn-primary').addEventListener('click', () => {
+    const modal = new bootstrap.Modal(document.getElementById('editProfileModal'));
+    modal.show();
+  });
+
+  // Handle form submission
+  document.getElementById('editProfileForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const field = document.getElementById('field').value;
+    const newValue = document.getElementById('newValue').value;
+    const reason = document.getElementById('reason').value;
+    try {
+        const response = await fetch('http://127.0.0.1:8000/admins/api/user/get-request/profile/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ field, value: newValue, reason }),
+        });
+
+        if (response.ok) {
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editProfileModal'));
+            modal.hide();
+
+            document.getElementById('editProfileForm').reset();
+        showAlert('success','✅ Update submitted successfully!');
+        } else {
+        showAlert('error','❌ Failed to submit update.');
+        }
+    } catch (error) {
+        showAlert('error','❌ Failed to submit update.');
+    }
+
+
     });
+
+  fetchData()
+
+
+  document.getElementById('PLogoutUser').addEventListener('click', function() {
+    RemoveAccessFromLocalStorage()
+    showAlert("success","✅ Logout successful! ")
+    setTimeout(() => {
+        window.location.href = "auth.html";
+    }, 2000);
 });
 
-function getStatusClass(status) {
-    switch(status.toLowerCase()) {
-        case 'completed': return 'success';
-        case 'processed': return 'primary';
-        case 'pending': return 'warning';
-        default: return 'secondary';
-    }
-}
+
+
+})

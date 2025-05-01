@@ -10,7 +10,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
-       
+        .dark-mode .card {
+            background: var(--dark-card);
+            color: var(--light);
+          }
+        
     </style>
 </head>
 <body>
@@ -60,7 +64,118 @@
         <!-- Main Feed -->
         <main>
             
-
+            <div class="container py-5">
+                <div class="row g-4">
+                  <!-- Contact Form Card -->
+                  <div class="col-lg-6">
+                    <div class="card shadow-sm rounded-4 border-0">
+                      <div class="card-body p-4">
+                        <h4 class="mb-4"><i class="bi bi-envelope-fill text-primary me-2"></i>Contact Support</h4>
+                        <form>
+                          <div class="mb-3">
+                            <label for="supportName" class="form-label">Name</label>
+                            <input type="text" class="form-control rounded-3" id="supportName" placeholder="Your name">
+                          </div>
+                          <div class="mb-3">
+                            <label for="supportEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control rounded-3" id="supportEmail" placeholder="you@example.com">
+                          </div>
+                          <div class="mb-3">
+                            <label for="supportMessage" class="form-label">Message</label>
+                            <textarea class="form-control rounded-3" id="supportMessage" rows="4" placeholder="Describe your issue..."></textarea>
+                          </div>
+                          <button type="submit" class="btn btn-primary w-100 rounded-3">Send Message</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+              
+                  <!-- FAQ Card -->
+                  <div class="col-lg-6">
+                    <div class="card shadow-sm rounded-4 border-0">
+                      <div class="card-body p-4">
+                        <h4 class="mb-4"><i class="bi bi-question-circle-fill text-warning me-2"></i>Frequently Asked Questions</h4>
+                        <div class="accordion" id="faqAccordion">
+                          <div class="accordion-item border-0 mb-2">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button rounded-3" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                How do I reset my password?
+                              </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                              <div class="accordion-body">
+                                Click on "Forgot Password" on the login screen and follow the instructions.
+                              </div>
+                            </div>
+                          </div>
+              
+                          <div class="accordion-item border-0 mb-2">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button collapsed rounded-3" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                How can I change my profile details?
+                              </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                              <div class="accordion-body">
+                                Navigate to your profile and click "Edit Profile".
+                              </div>
+                            </div>
+                          </div>
+              
+                          <div class="accordion-item border-0">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button collapsed rounded-3" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                How do I contact an agent?
+                              </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                              <div class="accordion-body">
+                                Use the contact form or live chat for agent support.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+                <!-- Support Contact Options -->
+                <div class="row text-center mt-5 g-4">
+                  <h4 class="mb-4">Other Ways to Reach Us</h4>
+              
+                  <div class="col-md-4">
+                    <div class="card h-100 shadow-sm border-0 rounded-4">
+                      <div class="card-body">
+                        <i class="bi bi-envelope-check-fill display-5 text-primary mb-3"></i>
+                        <h5>Email</h5>
+                        <p>support@example.com</p>
+                      </div>
+                    </div>
+                  </div>
+              
+                  <div class="col-md-4">
+                    <div class="card h-100 shadow-sm border-0 rounded-4">
+                      <div class="card-body">
+                        <i class="bi bi-telephone-inbound-fill display-5 text-success mb-3"></i>
+                        <h5>Phone</h5>
+                        <p>+1 (555) 123-4567</p>
+                      </div>
+                    </div>
+                  </div>
+              
+                  <div class="col-md-4">
+                    <div class="card h-100 shadow-sm border-0 rounded-4">
+                      <div class="card-body">
+                        <i class="bi bi-chat-dots-fill display-5 text-info mb-3"></i>
+                        <h5>Live Chat</h5>
+                        <p>Available 24/7 via chat icon</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
         </main>
     </div>
 

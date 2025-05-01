@@ -261,6 +261,14 @@ body.dark-mode .mobile-nav-item {
 }
 
 
+body.dark-mode .modal-content{
+    background: var(--dark-card);
+}
+
+body.dark-mode .modal-close{
+    background-color: rgb(255, 255, 255);
+}
+
 
 
 

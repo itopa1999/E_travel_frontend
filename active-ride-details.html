@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .hover-effect {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-effect:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .avatar-icon {
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dark-mode .card {
+            background: var(--dark-card);
+            color: var(--light);
+          }
+        .animate__animated { animation-duration: 0.5s; }
+        .badge { font-size: 0.9rem; padding: 0.5em 0.75em; }
+    </style>
+</head>
+<body>
+    <header class="header py-3">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="mb-0"><a href="index.html" class="header-title">🎖️ TravelHub</a></h1>
+                <div class="d-flex align-items-center gap-3 position-relative">
+                    <span class="d-none d-md-block text-mute" id="first_name"></span>
+                    <div class="" type="button" id="userMenu">
+                        <img id="profilePic" class="avatar" style="cursor: pointer;">
+                    </div>
+                    
+                    <!-- Dropdown Menu -->
+                    <div class="custom-dropdown-menu shadow" 
+                         style="display: none;"
+                         id="userDropdown">
+                        <div class="dropdown-item" id="ChangePassword">
+                            <span id="dropdown-text">Change Password</span> <i class="bi bi-key"></i>
+                        </div>
+                        <div class="dropdown-item" id="logoutUser">
+                            <span id="dropdown-text">Sign-out</span> <i class="bi bi-arrow-return-right"></i>
+                        </div>
+                        <div class="dropdown-item" id="RegUser">
+                            <span id="dropdown-text">Sign-In/Sign-Up</span> <i class="bi bi-arrow-return-left"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class=" container main-grid">
+        <div class="sidebar">
+            <nav id="role-based-nav" class="d-flex flex-column">
+                
+            </nav>
+
+            <!-- <div class="premium-banner">
+                <h5>NYSC (National Youth Service Corps) </h5>  
+                <p>Service and Humility.</p>
+                <button class="btn btn-light w-100">Motto!!!</button>
+            </div> -->
+
+        </div>
+
+        <!-- Main Feed -->
+        <main>
+            <div class="animate__animated animate__fadeIn">
+              <!-- Passenger Header -->
+              <div class="row mb-4">
+                <div class="col-12">
+                  <div class="card shadow-sm hover-effect">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center">
+                        <div class="">
+                          <img class="avatar-icon rounded-circle p-3 me-3" id="passengerImg" src="" alt="">
+                        </div>
+                        <div>
+                          <h2 class="mb-1" id="passenger-name">Passenger Details</h2>
+                          <div class="d-flex gap-4 text-mute">
+                            <span><i class="fas fa-phone me-2"></i><span id="passenger-phone">Null</span></span>
+                            <span><i class="fas fa-envelope me-2"></i><span id="passenger-email">Null</span></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <!-- Main Content -->
+              <div class="row g-4">
+                <!-- Ride Details -->
+                <div class="col-lg-6">
+                  <div class="card shadow-sm hover-effect">
+                    <div class="card-body">
+                      <h4 class="card-title mb-4"><i class="fas fa-car me-2 text-primary"></i>Ride Information</h4>
+                      <div class="row g-3">
+                        <div class="col-md-6">
+                          <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-chair me-3 text-secondary"></i>
+                            <div>
+                              <small class="text-mute">Seats Taken</small>
+                              <div class="h5 mb-0"><span id="seats-taken">0</span> Seats</div>
+                            </div>
+                          </div>
+                        </div>
+          
+                        <div class="col-md-6">
+                          <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-wallet me-3 text-success"></i>
+                            <div>
+                              <small class="text-mute">Payment Status</small>
+                              <div class="h5 mb-0 badge" id="payment-status">Null</div>
+                            </div>
+                          </div>
+                        </div>
+          
+                        <div class="col-md-6">
+                          <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-check-circle me-3 text-primary"></i>
+                            <div>
+                              <small class="text-mute">Ride Status</small>
+                              <div class="h5 mb-0 badge" id="ride-status">Null</div>
+                            </div>
+                          </div>
+                        </div>
+          
+                        <div class="col-md-6">
+                          <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-money-bill-wave me-3 text-warning"></i>
+                            <div>
+                              <small class="text-mute">Payment Method</small>
+                              <div class="h5 mb-0">
+                                <span class="badge bg-info" id="payment-method">
+                                  <i class="fas fa-credit-card me-2"></i>Online
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="mt-4 d-flex gap-2">
+                            <button id="btn-complete" class="btn btn-success">
+                              <i class="fas fa-check-circle me-2"></i>
+                              Mark as Completed
+                            </button>
+                            <button id="btn-reject" class="btn btn-danger">
+                              <i class="fas fa-times-circle me-2"></i>
+                              Reject Ride
+                            </button>
+                          </div>
+                          
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          
+                <!-- Special Requests -->
+                <div class="col-lg-6">
+                  <div class="card shadow-sm hover-effect">
+                    <div class="card-body">
+                      <h4 class="card-title mb-4"><i class="fas fa-comments me-2 text-primary"></i>Special Requests</h4>
+                      <div class="alert alert-light border-primary">
+                        <i class="fas fa-sticky-note me-2 text-primary"></i>
+                        <span id="special-request">Null</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+    </div>
+
+
+
+
+    <nav class="mobile-footer-nav">
+        <div class="mobile-nav-items" id="mobile-nav-items">
+            <!-- Nav items will be injected here -->
+        </div>
+        
+    </nav>
+
+    <div class="custom-alert" id="customAlert">
+        <div class="alert-progress" id="alertProgress"></div>
+        <span class="alert-content" id="alertContent"></span>
+    </div>
+
+    <button class="mode-toggle" id="darkModeToggle">🌙</button>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/active-ride-details.js"></script>
+
+</body>
+</html>

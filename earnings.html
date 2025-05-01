@@ -10,7 +10,60 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
-       
+        .dark-mode .card {
+            background: var(--dark-card);
+            color: var(--light);
+          }
+
+          .dark-mode .table-hover tbody tr:hover {
+            background-color: #334155;
+          }
+
+          .table-hover tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .transaction-transaction{
+            color: #334155;
+        }
+
+        .dark-mode .transaction-transaction{
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .table td, .table th {
+              font-size: 0.875rem;
+              white-space: wrap;
+            }
+
+            .table thead {
+                display: none;
+            }
+            
+            .table tr {
+                display: block;
+                margin-bottom: 1rem;
+                border: 1px solid #dee2e6;
+                border-radius: 0.25rem;
+            }
+            
+            .table td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border: none;
+            }
+            
+            .table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                margin-right: 1rem;
+            }
+        }
+
+
+          
     </style>
 </head>
 <body>
@@ -59,10 +112,162 @@
 
         <!-- Main Feed -->
         <main>
-            
+            <div class="row mb-4">
+                <div class="col text-end">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#payoutModal">
+                    <i class="fas fa-wallet me-2"></i>
+                    Withdraw Funds
+                    </button>
+                </div>
+            </div>
+        
+            <!-- Earnings Summary -->
+            <div class="row mb-4">
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <i class="fas fa-calendar-day fa-2x text-primary"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-uppercase text-mute mb-1">Total Earnings</h6>
+                        <h3 class="mb-0" id="totalEarnings">₦0</h3>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <i class="fas fa-calendar-day fa-2x text-primary"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-uppercase text-mute mb-1">Today’s Earnings</h6>
+                        <h3 class="mb-0" id="earnings-today">₦0</h3>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <i class="fas fa-calendar-week fa-2x text-success"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-uppercase text-mute mb-1">This Week</h6>
+                        <h3 class="mb-0" id="earnings-week">₦0</h3>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <i class="fas fa-calendar-alt fa-2x text-warning"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-uppercase text-mute mb-1">This Month</h6>
+                        <h3 class="mb-0" id="earnings-month">₦0</h3>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
 
+        
+            <!-- Recent Transactions -->
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Recent Transactions</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th class="text-end">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactionTableBody">
+                       
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            </div>
+        
         </main>
     </div>
+
+
+    <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content transaction-transaction">
+            <div class="modal-header">
+              <h5 class="modal-title" id="transactionModalLabel">Transaction Details</h5>
+              <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="transactionDetails">
+              <!-- Filled via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+
+    <div class="modal fade" id="payoutModal" tabindex="-1" aria-labelledby="payoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <form id="payoutForm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-mute" id="payoutModalLabel">Request Payout</h5>
+                <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+      
+              <div class="modal-body">
+
+                <div class="alert alert-warning" role="alert">
+                    ⚠️ <strong>Note:</strong> Account name must match your registered First Name and Last Name.
+                  </div>
+
+                <div class="mb-3">
+                <label for="amount" class="form-label text-mute">Amount</label>
+                <input type="number" class="form-control" id="amount" name="amount" required>
+                <span id="amountError" class="text-danger small mt-1 d-block"></span>
+                </div>
+      
+                <div class="mb-3">
+                  <label for="bank" class="form-label text-mute">Bank Name</label>
+                  <input type="text" class="form-control" id="bank" name="bank" required>
+                </div>
+      
+                <div class="mb-3">
+                  <label for="accountNumber" class="form-label text-mute">Account Number</label>
+                  <input type="number" class="form-control" id="accountNumber" name="accountNumber" required>
+                </div>
+              </div>
+      
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Submit Request</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
 
 
 

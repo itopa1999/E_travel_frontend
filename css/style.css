@@ -329,7 +329,7 @@ body.dark-mode .mobile-nav-item {
 
 
 body.dark-mode .modal-content{
-    background: rgba(30,41,59,0.95);
+    background: var(--dark-card);
 }
 
 body.dark-mode .modal-close{

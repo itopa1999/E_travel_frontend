@@ -11,36 +11,7 @@
     <link rel="stylesheet" href="css/style.css">
     
 <style>
-    .profile-picture-container {
-        position: relative;
-        width: 150px;
-        height: 150px;
-        transition: transform 0.3s ease;
-    }
-    
-    .profile-picture-container:hover {
-        transform: scale(1.05);
-    }
-    
-    .hover-effect {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        background: rgba(0,0,0,0.2);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    
-    .profile-picture-container:hover .hover-effect {
-        opacity: 1;
-    }
-    
-    .bg-primary-gradient {
-        background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
-    }
+
     
     .list-group-item {
         transition: background-color 0.2s ease;
@@ -49,11 +20,11 @@
     .table-hover tbody tr:hover {
         background-color: #f8f9fa;
     }
-    
-    .card {
-        border: none;
-        border-radius: 0.5rem;
-    }
+
+    .dark-mode .card {
+        background: var(--dark-card);
+        color: var(--light);
+      }
     
     .shadow-sm {
         box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
@@ -106,45 +77,48 @@
 
         <!-- Main Feed -->
         <main>
-        <div class="py-4">
-            <div class="row">
-                <!-- Profile Section -->
-                <div class="col-lg-4">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-header p-4 bg-primary-gradient text-white">
-                            <div class="text-center">
-                                <div class="profile-picture-container mx-auto mb-3">
-                                    <img src="https://via.placeholder.com/150" alt="Profile Picture" 
-                                        class="img-fluid rounded-circle shadow-lg" id="profilePicture">
-                                    <div class="hover-effect"></div>
-                                </div>
-                                <h3 class="mb-0" id="fullName">John Doe</h3>
-                                <p class="text-muted">Premium Member</p>
-                            </div>
+            <div class="container mt-4">
+                <div class="row justify-content-center">
+                  <div class="col-md-8">
+                    <div class="card shadow rounded-4">
+                      <div class="card-body p-4 d-flex flex-column align-items-center text-center">
+                        <!-- Profile Image -->
+                        <img src="" id="profilePicture" alt="User Avatar"
+                             class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+              
+                        <!-- Name -->
+                        <h4 id="profileName" class="mb-1">XXX</h4>
+              
+                        <!-- Email -->
+                        <p class="text-mute mb-2">
+                          <i class="fas fa-envelope me-2"></i>
+                          <span id="profileEmail">XXX</span>
+                        </p>
+              
+                        <!-- Phone -->
+                        <p class="text-mute">
+                          <i class="fas fa-phone me-2"></i>
+                          <span id="profilePhone">XXX</span>
+                        </p>
+              
+                        <!-- Action Buttons -->
+                        <div class="d-flex gap-3 mt-3">
+                          <button class="btn btn-primary">
+                            <i class="fas fa-edit me-1"></i> Request for Edit Profile
+                          </button>
+                          <button class="btn btn-outline-danger" id="PLogoutUser">
+                            <i class="fas fa-sign-out-alt me-1"></i> Logout
+                          </button>
                         </div>
-                        <div class="card-body">
-                            <div class="list-group list-group-flush">
-                                <div class="list-group-item d-flex align-items-center">
-                                    <i class="fas fa-envelope fa-fw me-3 text-primary"></i>
-                                    <div>
-                                        <p class="mb-0 small text-muted">Email</p>
-                                        <p class="mb-0" id="userEmail">john.doe@example.com</p>
-                                    </div>
-                                </div>
-                                <div class="list-group-item d-flex align-items-center">
-                                    <i class="fas fa-phone fa-fw me-3 text-primary"></i>
-                                    <div>
-                                        <p class="mb-0 small text-muted">Phone</p>
-                                        <p class="mb-0" id="userPhone">+1 (555) 123-4567</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
+              </div>
+              
 
                 <!-- Transaction History -->
-                <div class="col-lg-8">
+                <!-- <div class="col-lg-8">
                     <div class="card shadow-sm">
                         <div class="card-header bg-white">
                             <h5 class="mb-0">Transaction History</h5>
@@ -161,19 +135,59 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Transactions will be populated here -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
 
 
         </main>
     </div>
+
+
+    <!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="editProfileForm" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-mute" id="editProfileModalLabel">Update Profile Field</h5>
+          <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+  
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="field" class="form-label text-mute">Select Field</label>
+            <select class="form-select" id="field" required>
+              <option value="">-- Select Field --</option>
+              <option value="first_name">First Name</option>
+              <option value="last_name">Last Name</option>
+              <option value="email">Email</option>
+              <option value="phone">Phone</option>
+            </select>
+          </div>
+  
+          <div class="mb-3">
+            <label for="newValue" class="form-label text-mute">New Value</label>
+            <input type="text" class="form-control" id="newValue" required>
+          </div>
+  
+          <div class="mb-3">
+            <label for="reason" class="form-label text-mute">Reason for Change</label>
+            <textarea class="form-control" id="reason" rows="3" required></textarea>
+          </div>
+        </div>
+  
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Submit Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
 
 
 
