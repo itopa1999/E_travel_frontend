@@ -7,6 +7,7 @@ document.getElementById('logoutUser').addEventListener('click', function() {
     }, 2000);
 });
 
+const BASE_URL = "http://127.0.0.1:8000/backend/api";
 
 
 document.getElementById('RegUser').addEventListener('click', function() {

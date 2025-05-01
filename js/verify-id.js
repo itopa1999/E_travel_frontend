@@ -113,7 +113,7 @@ restrictPageAccess({
 
 
       try {
-        const response = await fetch('http://127.0.0.1:8000/backend/api/driver/id/verification/process/', {
+        const response = await fetch(`${BASE_URL}/driver/id/verification/process/`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -149,7 +149,7 @@ restrictPageAccess({
 
 async function GetIdInfo() {
     try {
-        const response = await fetch('http://127.0.0.1:8000/backend/api/driver/info/', {
+        const response = await fetch(`${BASE_URL}/driver/info/`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`

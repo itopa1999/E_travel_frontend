@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     async function fetchData() {
         try {
           const response = await fetch(
-            `http://127.0.0.1:8000/backend/api/driver/earning/summary/`,
+            `${BASE_URL}/driver/earning/summary/`,
             {
               method: 'GET',
               headers: {
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
   
       try {
-          const response = await fetch('http://127.0.0.1:8000/backend/api/driver/withdrawal/process/', {
+          const response = await fetch(`${BASE_URL}/driver/withdrawal/process/`, {
               method: 'POST',
               headers: {
                   'Authorization': `Bearer ${token}`,

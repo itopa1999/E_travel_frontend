@@ -4,7 +4,7 @@ restrictPageAccess({
 
   async function fetchData() {
     try {
-        const response = await fetch('http://127.0.0.1:8000/backend/api/driver/dashboard/', {
+        const response = await fetch(`${BASE_URL}/driver/dashboard/`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -125,7 +125,7 @@ function displayData(data){
             toggleLabel.textContent = data.availability ? 'Online' : 'Offline';
     
             try {
-                const response = await fetch('http://127.0.0.1:8000/backend/api/driver/update/availability/', {
+                const response = await fetch(`${BASE_URL}/driver/update/availability/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -182,7 +182,7 @@ document.getElementById('payoutForm').addEventListener('submit', async function(
     }
 
     try {
-        const response = await fetch('http://127.0.0.1:8000/backend/api/driver/withdrawal/process/', {
+        const response = await fetch(`${BASE_URL}/driver/withdrawal/process/`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
